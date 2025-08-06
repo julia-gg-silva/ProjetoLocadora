@@ -16,6 +16,13 @@ public class Cliente {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "\nId: " + id +
+                "\nNome: " + nome+
+                "\nEmail: " + email + "\n";
+    }
+
     public int getId() {
         return id;
     }

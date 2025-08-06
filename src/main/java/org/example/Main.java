@@ -2,9 +2,11 @@ package org.example;
 
 import org.example.dao.ClienteDAO;
 import org.example.dao.FilmeDAO;
+import org.example.model.Aluguel;
 import org.example.model.Cliente;
 import org.example.model.Filme;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -52,11 +54,44 @@ public class Main {
                 cadastrarFilme();
                 break;
             }
+            case 3: {
+                realizarAluguel();
+            }
         }
 
         if (!sair) {
             menu();
         }
+    }
+
+    private static void realizarAluguel() {
+        System.out.println("---Realizar Aluguel---");
+
+        ClienteDAO clientedao = new ClienteDAO();
+
+        System.out.println("Clientes: ");
+        for(Cliente clientes : clientedao.listarClientes()){
+            System.out.println(clientes);
+        }
+
+        System.out.println("Informe o id do Cliente que deseja realizar o aluguel: ");
+        int idCliente = sc.nextInt();
+        sc.nextLine();
+
+        FilmeDAO filmedao = new FilmeDAO();
+
+        System.out.println("Filmes: ");
+        for(Filme filme : filmedao.listarFilmes()){
+            System.out.println(filme);
+        }
+
+        System.out.println("Informe o id do Filme que deseja alugar: ");
+        int idFilme = sc.nextInt();
+        sc.nextLine();
+
+        LocalDate dataAluguel = LocalDate.now();
+
+        Aluguel aluguel = new Aluguel(idCliente, idFilme, dataAluguel, null);
     }
 
     private static void cadastrarFilme() {
@@ -70,6 +105,7 @@ public class Main {
 
         System.out.println("Informe o ano do filme: ");
         int anoLancamento = sc.nextInt();
+        sc.nextLine();
 
         Filme filme = new Filme(titulo, genero, anoLancamento);
         FilmeDAO dao = new FilmeDAO();

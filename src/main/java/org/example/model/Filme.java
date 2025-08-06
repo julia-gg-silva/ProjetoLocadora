@@ -19,6 +19,14 @@ public class Filme {
         this.anoLancamento = anoLancamento;
     }
 
+    @Override
+    public String toString() {
+        return "\nId: " + id +
+                "\nTítulo: " + titulo+
+                "\nGenero: " + genero+
+                "\nAno de Lançamento: " + anoLancamento + "\n";
+    }
+
     public int getId() {
         return id;
     }
