@@ -1,6 +1,5 @@
 package org.example.dao;
 
-import org.example.model.Cliente;
 import org.example.model.Filme;
 
 import java.sql.Connection;
@@ -56,6 +55,31 @@ public class FilmeDAO {
         }
 
         return filmes;
+    }
+
+    public Filme buscarFilme(int id) {
+        String sql = "SELECT nome, genero, anoLancamento FROM filme WHERE id = ?";
+        Filme filme;
+
+        int anoLancamento = 0;
+        String genero = null;
+        String nome = null;
+        try (Connection connection = Conexao.conectar();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                nome = rs.getString("nome");
+                genero = rs.getString("genero");
+                anoLancamento = rs.getInt("anoLancamento");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new Filme(nome, genero, anoLancamento);
     }
 
 }

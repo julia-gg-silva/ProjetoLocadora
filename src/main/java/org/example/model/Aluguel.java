@@ -1,8 +1,6 @@
 package org.example.model;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Aluguel {
     private int id;
@@ -22,6 +20,17 @@ public class Aluguel {
     public Aluguel(int clienteId, int filmeId, LocalDate dataAluguel, LocalDate dataDevolucao){
         this.clienteId = clienteId;
         this.filmeId = filmeId;
+        this.dataAluguel = dataAluguel;
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public Aluguel(int id, LocalDate dataAluguel){
+        this.id = id;
+        this.dataAluguel = dataAluguel;
+    }
+
+    public Aluguel(int id, LocalDate dataAluguel, LocalDate dataDevolucao){
+        this.id = id;
         this.dataAluguel = dataAluguel;
         this.dataDevolucao = dataDevolucao;
     }

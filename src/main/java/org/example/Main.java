@@ -1,8 +1,10 @@
 package org.example;
 
+import org.example.dao.AluguelDAO;
 import org.example.dao.ClienteDAO;
 import org.example.dao.FilmeDAO;
 import org.example.model.Aluguel;
+import org.example.model.AluguelDevolucao;
 import org.example.model.Cliente;
 import org.example.model.Filme;
 
@@ -56,6 +58,30 @@ public class Main {
             }
             case 3: {
                 realizarAluguel();
+                break;
+            }
+            case 4: {
+                devolverFilmes();
+                break;
+            }
+            case 5: {
+                listarClientes();
+                break;
+            }
+            case 6: {
+                listarFilmes();
+                break;
+            }
+            case 7: {
+                listarAlugueis();
+                break;
+            }
+            case 8: {
+                listarAlugueisPendentes();
+                break;
+            }
+            case 9: {
+                listarFilmesPorClientes();
             }
         }
 
@@ -64,12 +90,79 @@ public class Main {
         }
     }
 
+    private static void listarFilmesPorClientes() {
+        FilmeDAO filmeDao = new FilmeDAO();
+
+        System.out.println("\n---Filmes---");;
+        for(Filme filme : filmeDao.listarFilmes()){
+            System.out.println(filme);
+        }
+        System.out.println("Informe o id do filme que deseja visualizar os alugueis: ");
+        int id = sc.nextInt();
+
+        AluguelDAO aluguelDAO = new AluguelDAO();
+
+//        String filme = filmeDao.buscarFilme(id);
+
+//        System.out.println("Clientes que alugaram o filme '" + filme+ "' ");
+        for(Cliente cliente : aluguelDAO.listarFilmesPorCLiente(id)){
+            System.out.println(cliente);
+        }
+    }
+
+    private static void listarAlugueisPendentes() {
+        AluguelDAO dao = new AluguelDAO();
+        System.out.println("\n---Alugueis pendentes---");
+        for(AluguelDevolucao aluguelDevolucao : dao.listarAlugueisDevolucoes()){
+            System.out.println(aluguelDevolucao);
+        }
+    }
+
+    private static void listarAlugueis() {
+        AluguelDAO dao = new AluguelDAO();
+        System.out.println("\n---Histórico de alugueis---");
+        for(AluguelDevolucao aluguelDevolucao : dao.listarAlugueis()){
+            System.out.println(aluguelDevolucao + "Data de devolução: " + aluguelDevolucao.getDataDevolucao() + "\n");
+        }
+    }
+
+    private static void listarFilmes() {
+        FilmeDAO dao = new FilmeDAO();
+        System.out.println("\n---Filmes---");
+        for(Filme filme : dao.listarFilmes()){
+            System.out.println(filme);
+        }
+    }
+
+    private static void listarClientes() {
+        ClienteDAO dao = new ClienteDAO();
+        System.out.println("\n---Clientes Cadastrados---");
+        for(Cliente cliente : dao.listarClientes()){
+            System.out.println(cliente);
+        }
+    }
+
+    private static void devolverFilmes() {
+        System.out.println("---Devolver Filme---");
+
+        AluguelDAO aluguelDAO = new AluguelDAO();
+        for(AluguelDevolucao aluguelDevolucao : aluguelDAO.listarAlugueisDevolucoes()){
+            System.out.println(aluguelDevolucao);
+        }
+        System.out.println("Informe o id do Aluguel que deseja devolver: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        aluguelDAO.registroDevolucao(id);
+
+    }
+
     private static void realizarAluguel() {
         System.out.println("---Realizar Aluguel---");
 
         ClienteDAO clientedao = new ClienteDAO();
 
-        System.out.println("Clientes: ");
+        System.out.println("\nClientes: ");
         for(Cliente clientes : clientedao.listarClientes()){
             System.out.println(clientes);
         }
@@ -80,7 +173,7 @@ public class Main {
 
         FilmeDAO filmedao = new FilmeDAO();
 
-        System.out.println("Filmes: ");
+        System.out.println("\nFilmes: ");
         for(Filme filme : filmedao.listarFilmes()){
             System.out.println(filme);
         }
@@ -92,6 +185,10 @@ public class Main {
         LocalDate dataAluguel = LocalDate.now();
 
         Aluguel aluguel = new Aluguel(idCliente, idFilme, dataAluguel, null);
+
+        AluguelDAO aluguelDao = new AluguelDAO();
+
+        aluguelDao.cadastrarAluguel(aluguel);
     }
 
     private static void cadastrarFilme() {
