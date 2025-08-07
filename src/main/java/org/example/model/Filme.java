@@ -19,6 +19,10 @@ public class Filme {
         this.anoLancamento = anoLancamento;
     }
 
+    public Filme(String titulo){
+        this.titulo = titulo;
+    }
+
     @Override
     public String toString() {
         return "\nId: " + id +

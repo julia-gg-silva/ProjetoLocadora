@@ -58,7 +58,7 @@ public class FilmeDAO {
     }
 
     public Filme buscarFilme(int id) {
-        String sql = "SELECT nome, genero, anoLancamento FROM filme WHERE id = ?";
+        String sql = "SELECT titulo, genero, anoLancamento FROM filme WHERE id = ?";
         Filme filme;
 
         int anoLancamento = 0;
@@ -71,7 +71,7 @@ public class FilmeDAO {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                nome = rs.getString("nome");
+                nome = rs.getString("titulo");
                 genero = rs.getString("genero");
                 anoLancamento = rs.getInt("anoLancamento");
             }
@@ -79,7 +79,7 @@ public class FilmeDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Filme(nome, genero, anoLancamento);
+        return new Filme(nome);
     }
 
 }

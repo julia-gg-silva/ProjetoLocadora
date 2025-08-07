@@ -102,9 +102,9 @@ public class Main {
 
         AluguelDAO aluguelDAO = new AluguelDAO();
 
-//        String filme = filmeDao.buscarFilme(id);
+        Filme filme = filmeDao.buscarFilme(id);
 
-//        System.out.println("Clientes que alugaram o filme '" + filme+ "' ");
+        System.out.println("Clientes que alugaram o filme '" + filme);
         for(Cliente cliente : aluguelDAO.listarFilmesPorCLiente(id)){
             System.out.println(cliente);
         }
